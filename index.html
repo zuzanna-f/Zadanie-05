@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body class= "justify-content-center">
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"
@@ -34,34 +34,53 @@
 
         // Initialize Cloud Firestore and get a reference to the service
         const db = getFirestore(app);
-
-        // Read data
+        /* IDK why this won't work
+        document.getElementById("add").addEventListener("click", querySnapshot);
         const querySnapshot = await getDocs(collection(db, "cars"));
-        var counter = 0;
-        querySnapshot.forEach((doc) => {
-            counter ++;
+          marka = document.getElementById("marka").value
+          model = document.getElementById("model").value
+          silnik = document.getElementById("silnik").value
+          kolor = document.getElementById("kolor").value
+          let r = (Math.random() + 1).toString(36).substring(7);
+          await setDoc(doc(db, "cars", "new "+r), {
+              make: marka,
+              model: model,
+              engine: silnik,
+              color: kolor
+          });
+        */
+        // Read data
+        const cars_list = document.getElementById("list-cars");
+        const querySnapshot2 = await getDocs(collection(db, "cars"));
+        querySnapshot2.forEach((doc) => {
+
             //console.log(doc.data());
             //console.log(doc.data()['make'],doc.data()['model'],doc.data()['engine']);
             //document.writeln(doc.data()['make'],' ',doc.data()['model'],' ',doc.data()['engine'],'<br>');
-            console.log(counter);
-            document.getElementById('log'+counter).innerHTML ='Marka: '+ doc.data()['make'] + ' ' + 'Model: ' + doc.data()['model'] + ' ' + 'Silnik: ' + doc.data()['engine'] + ' '  +'Kolor: '+ doc.data()['color'];
+            //console.log(counter);
+            //document.getElementById('log'+counter).innerHTML ='Marka: '+ doc.data()['make'] + ' ' + 'Model: ' + doc.data()['model'] + ' ' + 'Silnik: ' + doc.data()['engine'] + ' '  +'Kolor: '+ doc.data()['color'];
+            var tag = document.createElement("div");
+            var break_line = document.createElement("p");
+            var Marka = document.createElement("p");
+            var Typ = document.createElement("p");
+            var Silnik = document.createElement("p");
+            var Kolor = document.createElement("p");
+            break_line.innerHTML = "------------------------------------------"
+            Marka.innerHTML = "Marka: " + doc.data()['make'];
+            Typ.innerHTML = "Model: "+ doc.data()['model'];
+            Silnik.innerHTML = "Silnik: " + doc.data()['engine'];
+            Kolor.innerHTML = "Kolor: " + doc.data()['color'];
+            tag.appendChild(break_line);
+            tag.appendChild(Marka);
+            tag.appendChild(Typ);
+            tag.appendChild(Silnik);
+            tag.appendChild(Kolor);
+            cars_list.appendChild(tag);
        });
-        document.getElementById("form").addEventListener("submit", queryAdd);
-        const app = initializeApp(firebaseConfig);
-        var Marka = docment.getElementById('marka').value;
-        var Model = docment.getElementById('model').value;
-        var Silnik = docment.getElementById('silnik').value;
-        var Kolor = docment.getElementById('kolor').value;
-        const queryAdd = await setDoc(doc(db, "cars", 'car'+counter), {
-          make: Marka,
-          model: Model,
-          engine: Silnik,
-          color: Kolor
-      });
+        //document.getElementById("form").addEventListener("submit", Add_values);
 
 
     </script>
-
 <div class="container-fluid p-5 bg-primary text-white text-center">
   <h1>Firebase Cloud Storage</h1>
   <p>Add and read values from database</p> 
@@ -86,22 +105,26 @@
           <label for="kolor" class="form-label">Kolor</label>
           <input type="text" class="form-control" id="kolor" placeholder="Wpisz kolor samochodu" name="kolor">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button id="add" class="btn btn-primary">Submit</button>
       </form>
 </div>
 
-<div class="container text-center py-5 px-5 mx-5">
-  <p class="h3" id="log1"></p>
-  <p class="h3" id="log2"></p>
-  <p class="h3" id="log3"></p>
-  <p class="h3" id="log4"></p>
-  <p class="h3" id="log5"></p>
-  <p class="h3" id="log6"></p>
-  <p class="h3" id="log7"></p>
-  <p class="h3" id="log8"></p>
-  <p class="h3" id="log9"></p>
-  <p class="h3" id="log10"></p>
+<div id="list-cars" class="container text-center py-5 px-5 mx-5">
 </div>
 
+<section class="">
+  <footer class="text-center text-white" style="background-color: #0a4275;">
+    
+
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-white" href="https://github.com/WiktorKarnia">Wiktor Karnia</a>
+      <a class="text-white" href="https://github.com/zuzanna-f">Zuzanna Florczykiewicz</a>
+      <a class="text-white" href="https://github.com/DziadoszWiktor">Wiktor Dziadosz</a>
+    </div>
+
+  </footer>
+
+</section>
 </body>
 </html>
