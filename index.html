@@ -17,7 +17,7 @@
         // Firestore
         import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
         import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
-      
+        import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
         // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC2EM9Y02ZNgns17cXlpKXqY6-XnfDhk7M",
@@ -44,10 +44,21 @@
             //console.log(doc.data()['make'],doc.data()['model'],doc.data()['engine']);
             //document.writeln(doc.data()['make'],' ',doc.data()['model'],' ',doc.data()['engine'],'<br>');
             console.log(counter);
-             var g = document.createElement('p');
-            g.setAttribute("id", 'log'+counter);
-            document.getElementById('log'+counter).innerHTML = doc.data()['make'] + ' ' + doc.data()['model'] + ' ' + doc.data()['engine']
-        });
+            document.getElementById('log'+counter).innerHTML ='Marka: '+ doc.data()['make'] + ' ' + 'Model: ' + doc.data()['model'] + ' ' + 'Silnik: ' + doc.data()['engine'] + ' '  +'Kolor: '+ doc.data()['color'];
+       });
+        document.getElementById("form").addEventListener("submit", queryAdd);
+        const app = initializeApp(firebaseConfig);
+        var Marka = docment.getElementById('marka').value;
+        var Model = docment.getElementById('model').value;
+        var Silnik = docment.getElementById('silnik').value;
+        var Kolor = docment.getElementById('kolor').value;
+        const queryAdd = await setDoc(doc(db, "cars", 'car'+counter), {
+          make: Marka,
+          model: Model,
+          engine: Silnik,
+          color: Kolor
+      });
+
 
     </script>
 
@@ -56,25 +67,41 @@
   <p>Add and read values from database</p> 
 </div>
 
-<!---
+
 <div class="container text-center px-5 mx-5">
-    <form>
+    <form id="form">
         <div class="mb-3 mt-3">
-          <label for="email" class="form-label">Email:</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+          <label for="marka" class="form-label">Marka</label>
+          <input type="text" class="form-control" id="marka" placeholder="Wpisz markę samochodu" name="marka">
         </div>
         <div class="mb-3">
-          <label for="pwd" class="form-label">Password:</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+          <label for="model" class="form-label">Model</label>
+          <input type="text" class="form-control" id="model" placeholder="Wpisz model samochodu" name="model">
         </div>
-        <div class="form-check mb-3">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="remember"> Remember me
-          </label>
+        <div class="mb-3">
+          <label for="silnik" class="form-label">Silnik</label>
+          <input type="text" class="form-control" id="silnik" placeholder="Wpisz rodzaj silnika" name="silnik">
+        </div>
+        <div class="mb-3">
+          <label for="kolor" class="form-label">Kolor</label>
+          <input type="text" class="form-control" id="kolor" placeholder="Wpisz kolor samochodu" name="kolor">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 </div>
--->
+
+<div class="container text-center py-5 px-5 mx-5">
+  <p class="h3" id="log1"></p>
+  <p class="h3" id="log2"></p>
+  <p class="h3" id="log3"></p>
+  <p class="h3" id="log4"></p>
+  <p class="h3" id="log5"></p>
+  <p class="h3" id="log6"></p>
+  <p class="h3" id="log7"></p>
+  <p class="h3" id="log8"></p>
+  <p class="h3" id="log9"></p>
+  <p class="h3" id="log10"></p>
+</div>
+
 </body>
 </html>
