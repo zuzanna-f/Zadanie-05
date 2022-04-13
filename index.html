@@ -34,50 +34,58 @@
 
         // Initialize Cloud Firestore and get a reference to the service
         const db = getFirestore(app);
-        /* IDK why this won't work
-        document.getElementById("add").addEventListener("click", querySnapshot);
+        //IDK why this won't work
+        //document.getElementById("add").addEventListener("click", querySnapshot);
         const querySnapshot = await getDocs(collection(db, "cars"));
-          marka = document.getElementById("marka").value
-          model = document.getElementById("model").value
-          silnik = document.getElementById("silnik").value
-          kolor = document.getElementById("kolor").value
-          let r = (Math.random() + 1).toString(36).substring(7);
-          await setDoc(doc(db, "cars", "new "+r), {
-              make: marka,
-              model: model,
-              engine: silnik,
-              color: kolor
-          });
-        */
+
+          var but = document.getElementById("add")
+          
+          refresh()
+          but.addEventListener("click", async function(event, make ="default", model = "default", engine = "default", color = "default"){
+              
+              make = document.getElementById("marka").value;
+              model = document.getElementById("model").value;
+              engine = document.getElementById("silnik").value;
+              color = document.getElementById("kolor").value;
+              let r = (Math.random() + 1).toString(36).substring(7);
+              await setDoc(doc(db, "cars", "new "+r), {
+                  make: make,
+                  model: model,
+                  engine: engine,
+                  color: color
+                  });
+              refresh()
+              })
         // Read data
         const cars_list = document.getElementById("list-cars");
-        const querySnapshot2 = await getDocs(collection(db, "cars"));
-        querySnapshot2.forEach((doc) => {
+        async function refresh(){
+          const querySnapshot2 = await getDocs(collection(db, "cars"));
+          querySnapshot2.forEach((doc) => {
 
-            //console.log(doc.data());
-            //console.log(doc.data()['make'],doc.data()['model'],doc.data()['engine']);
-            //document.writeln(doc.data()['make'],' ',doc.data()['model'],' ',doc.data()['engine'],'<br>');
-            //console.log(counter);
-            //document.getElementById('log'+counter).innerHTML ='Marka: '+ doc.data()['make'] + ' ' + 'Model: ' + doc.data()['model'] + ' ' + 'Silnik: ' + doc.data()['engine'] + ' '  +'Kolor: '+ doc.data()['color'];
-            var tag = document.createElement("div");
-            var break_line = document.createElement("p");
-            var Marka = document.createElement("p");
-            var Typ = document.createElement("p");
-            var Silnik = document.createElement("p");
-            var Kolor = document.createElement("p");
-            break_line.innerHTML = "------------------------------------------"
-            Marka.innerHTML = "Marka: " + doc.data()['make'];
-            Typ.innerHTML = "Model: "+ doc.data()['model'];
-            Silnik.innerHTML = "Silnik: " + doc.data()['engine'];
-            Kolor.innerHTML = "Kolor: " + doc.data()['color'];
-            tag.appendChild(break_line);
-            tag.appendChild(Marka);
-            tag.appendChild(Typ);
-            tag.appendChild(Silnik);
-            tag.appendChild(Kolor);
-            cars_list.appendChild(tag);
-       });
-        //document.getElementById("form").addEventListener("submit", Add_values);
+              //console.log(doc.data());
+              //console.log(doc.data()['make'],doc.data()['model'],doc.data()['engine']);
+              //document.writeln(doc.data()['make'],' ',doc.data()['model'],' ',doc.data()['engine'],'<br>');
+              //console.log(counter);
+              //document.getElementById('log'+counter).innerHTML ='Marka: '+ doc.data()['make'] + ' ' + 'Model: ' + doc.data()['model'] + ' ' + 'Silnik: ' + doc.data()['engine'] + ' '  +'Kolor: '+ doc.data()['color'];
+              var tag = document.createElement("div");
+              var break_line = document.createElement("p");
+              var Marka = document.createElement("p");
+              var Typ = document.createElement("p");
+              var Silnik = document.createElement("p");
+              var Kolor = document.createElement("p");
+              break_line.innerHTML = "------------------------------------------"
+              Marka.innerHTML = "Marka: " + doc.data()['make'];
+              Typ.innerHTML = "Model: "+ doc.data()['model'];
+              Silnik.innerHTML = "Silnik: " + doc.data()['engine'];
+              Kolor.innerHTML = "Kolor: " + doc.data()['color'];
+              tag.appendChild(break_line);
+              tag.appendChild(Marka);
+              tag.appendChild(Typ);
+              tag.appendChild(Silnik);
+              tag.appendChild(Kolor);
+              cars_list.appendChild(tag);
+        });
+      }
 
 
     </script>
@@ -105,7 +113,7 @@
           <label for="kolor" class="form-label">Kolor</label>
           <input type="text" class="form-control" id="kolor" placeholder="Wpisz kolor samochodu" name="kolor">
         </div>
-        <button id="add" class="btn btn-primary">Submit</button>
+        <button type="button" id="add" class="btn btn-primary">Submit</button>
       </form>
 </div>
 
